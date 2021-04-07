@@ -46,7 +46,14 @@ namespace NfcConnect.Helpers
         }
         public IEnumerable<XmlNode> GetConfigurationElements(string XmlNodePath, out XmlNode returnNode, string startNodePath = null)
         {
-            returnNode = _ConfigurationFile.DocumentElement.SelectSingleNode(startNodePath + "/" + XmlNodePath);
+            if (startNodePath == null)
+            {
+                returnNode = _ConfigurationFile.DocumentElement;
+            }
+            else 
+            {
+                returnNode = _ConfigurationFile.SelectSingleNode(startNodePath + "/" + XmlNodePath); 
+            }
             List<XmlNode> result = new List<XmlNode>();
             foreach (XmlNode nodeElement in returnNode.ChildNodes)
             {

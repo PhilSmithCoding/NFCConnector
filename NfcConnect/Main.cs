@@ -32,6 +32,8 @@ namespace NfcConnect
         #region members
 
         private XMLConfigHelper _ConfigHelper;
+        string _AWSAccessKeyId;
+        string _AWSSecretAccessKey;
         private DatabaseConnect _DatabaseConnect;
         private MediaPlayer _MediaPlayer = new MediaPlayer();
 
@@ -93,6 +95,10 @@ namespace NfcConnect
             SelectDevice();
             establishContext();
             _ConfigHelper = new XMLConfigHelper(ConfigurationManager.AppSettings["configurationFile"]);
+            var AWSConfigHelper = new XMLConfigHelper(ConfigurationManager.AppSettings["AWSConfigurationFile"]);
+            var nodes = AWSConfigHelper.GetConfigurationElements("Entries", out XmlNode xmlNode, "AWSConfiguration");
+            _AWSAccessKeyId = ((XmlElement)nodes.SingleOrDefault(node => ((XmlElement) node).GetAttribute("key") == "awsAccessKeyId")).GetAttribute("value");
+            _AWSSecretAccessKey = ((XmlElement)nodes.SingleOrDefault(node => ((XmlElement)node).GetAttribute("key") == "awsSecretAccessKey")).GetAttribute("value");
             _DatabaseConnect = new DatabaseConnect();
         }
 
@@ -254,8 +260,8 @@ namespace NfcConnect
                 string text = verifyCard("5"); // 5 - is the block we are reading
                 string fileName = getcardUID();
                 string command = _DatabaseConnect.GetCommandForCardID(getcardUID());
-                label1.Text = command; 
-                AmazonPollyClient pc = new AmazonPollyClient("AKIAWBD5NKR4C6SFVI5W", "3Td7Dv7fSesBNd/aoFi6o2Tq3uh18UWp4TZHCGXY", Amazon.RegionEndpoint.EUWest3);
+                label1.Text = command;
+                AmazonPollyClient pc = new AmazonPollyClient(_AWSAccessKeyId, _AWSSecretAccessKey, Amazon.RegionEndpoint.EUWest3);
 
                 SynthesizeSpeechRequest sreq = new SynthesizeSpeechRequest();
                 sreq.OutputFormat = OutputFormat.Mp3;
