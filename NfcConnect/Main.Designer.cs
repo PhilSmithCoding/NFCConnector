@@ -75,7 +75,7 @@ namespace NfcConnect
             this.tabPage1.Controls.Add(this.LState);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 44);
-            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Name = "readPage";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(1117, 673);
             this.tabPage1.TabIndex = 0;
@@ -112,7 +112,7 @@ namespace NfcConnect
             this.tabPage2.Controls.Add(this.TBCommand);
             this.tabPage2.Controls.Add(this.button3);
             this.tabPage2.Location = new System.Drawing.Point(4, 44);
-            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Name = "configurationPage";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(1117, 673);
             this.tabPage2.TabIndex = 1;
